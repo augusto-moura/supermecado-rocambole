@@ -146,7 +146,7 @@ public class ListaComprasTest {
 
 		listaCompras.add(CODIGO_PRODUTO_B);
 
-		final Double somaReal = produtoA.getPrecoUnitario() + produtoB.getPrecoUnitario()
+		final Double somaReal = (produtoA.getPrecoUnitario() * 3) + produtoB.getPrecoUnitario()
 				- ((QUANTIDADE_MINIMA_PROMOCAO_A * PRECO_UNITARIO_PRODUTO_A) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A);
 
 		final Double resultado = listaCompras.getTotalPrice();
