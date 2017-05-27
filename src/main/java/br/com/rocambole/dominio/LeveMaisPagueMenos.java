@@ -22,7 +22,7 @@ public class LeveMaisPagueMenos implements Promocao {
 		final Long quantidadeProdutosNaLista = alvo.stream().filter(produtoAlvo::equals).count();
 		
 		if (quantidadeProdutosNaLista >= quantidadeMinima) {
-			return novoPreco;
+			return (quantidadeMinima * produtoAlvo.getPrecoUnitario()) - novoPreco;
 		}
 		
 		return 0D;
