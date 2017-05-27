@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ListaCompras {
 
-	private List<Produto> lista = new ArrayList<>();
+	private List<Produto> listaCompras = new ArrayList<>();
 
 	private final List<Promocao> listaPromocoes;
 
@@ -39,7 +39,7 @@ public class ListaCompras {
 	}
 
 	public void add(final String codigo) {
-		lista.add(encontrarNoEstoquePorCodigo(codigo));
+		listaCompras.add(encontrarNoEstoquePorCodigo(codigo));
 	}
 
 	public Double getTotalPrice() {
@@ -47,7 +47,8 @@ public class ListaCompras {
 	}
 
 	public Double getTotalDiscount() {
-		throw new RuntimeException("Não implementado");
+		final Double soma = listaPromocoes.stream().mapToDouble(p -> p.precoPromocional(listaCompras)).sum();
+		return soma;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class ListaCompras {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((estoque == null) ? 0 : estoque.hashCode());
-		result = prime * result + ((lista == null) ? 0 : lista.hashCode());
+		result = prime * result + ((listaCompras == null) ? 0 : listaCompras.hashCode());
 		result = prime * result + ((listaPromocoes == null) ? 0 : listaPromocoes.hashCode());
 		return result;
 	}
@@ -74,10 +75,10 @@ public class ListaCompras {
 				return false;
 		} else if (!estoque.equals(other.estoque))
 			return false;
-		if (lista == null) {
-			if (other.lista != null)
+		if (listaCompras == null) {
+			if (other.listaCompras != null)
 				return false;
-		} else if (!lista.equals(other.lista))
+		} else if (!listaCompras.equals(other.listaCompras))
 			return false;
 		if (listaPromocoes == null) {
 			if (other.listaPromocoes != null)
