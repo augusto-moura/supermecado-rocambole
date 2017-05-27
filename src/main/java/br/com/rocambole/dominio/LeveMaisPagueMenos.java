@@ -3,7 +3,7 @@ package br.com.rocambole.dominio;
 import java.util.List;
 
 public class LeveMaisPagueMenos implements Promocao {
-	
+
 	private final Produto produtoAlvo;
 
 	private final Long quantidadeMinima;
@@ -20,11 +20,12 @@ public class LeveMaisPagueMenos implements Promocao {
 	@Override
 	public Double descontoPromocional(List<Produto> alvo) {
 		final Long quantidadeProdutosNaLista = alvo.stream().filter(produtoAlvo::equals).count();
-		
+
 		if (quantidadeProdutosNaLista >= quantidadeMinima) {
-			return (quantidadeMinima * produtoAlvo.getPrecoUnitario()) - novoPreco;
+			return ((quantidadeMinima * produtoAlvo.getPrecoUnitario()) - novoPreco)
+					* Math.floor(quantidadeProdutosNaLista / quantidadeMinima);
 		}
-		
+
 		return 0D;
 	}
 

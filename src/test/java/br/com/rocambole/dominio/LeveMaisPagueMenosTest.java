@@ -59,10 +59,10 @@ public class LeveMaisPagueMenosTest {
 
 	@Test
 	public void precoPromocinalDeveriaSerPrecoUnitarioVezesQuantidadeMenosPrecoPromocionalEsperadoMenosQuandoPossivelMaisDeUmaPromocao() {
-		final Double resultado = promocao.descontoPromocional(
-				Arrays.asList(produto, produto, produto, produto, produto, produto, produto, produto, produto, produto));
+		final Double resultado = promocao.descontoPromocional(Arrays.asList(produto, produto, produto, produto, produto,
+				produto, produto, produto, produto, produto));
 
-		Assert.assertEquals((QUANTIDADE_MINIMA_PROMOCAO * PRECO_PRODUTO_A * 3) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO,
+		Assert.assertEquals(((QUANTIDADE_MINIMA_PROMOCAO * PRECO_PRODUTO_A) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO) * 3,
 				resultado, 0);
 	}
 
