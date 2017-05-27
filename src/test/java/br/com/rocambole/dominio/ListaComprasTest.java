@@ -71,7 +71,7 @@ public class ListaComprasTest {
 	public void totalPriceDeveriaSerZeroQuandoListaVazia() {
 		final Double resultado = listaCompras.getTotalPrice();
 
-		Assert.assertEquals(resultado, (Double) 0D);
+		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
@@ -80,7 +80,7 @@ public class ListaComprasTest {
 
 		final Double resultado = listaCompras.getTotalPrice();
 
-		Assert.assertEquals(resultado, produtoA.getPrecoUnitario());
+		Assert.assertEquals(produtoA.getPrecoUnitario(), resultado);
 	}
 
 	@Test
@@ -92,14 +92,14 @@ public class ListaComprasTest {
 
 		final Double resultado = listaCompras.getTotalPrice();
 
-		Assert.assertEquals(resultado, somaReal);
+		Assert.assertEquals(somaReal, resultado);
 	}
 
 	@Test
 	public void totalDiscountDeveriaSerZeroQuandoNenhumaPromocaoValida() {
 		final Double resultado = listaCompras.getTotalDiscount();
 
-		Assert.assertEquals(resultado, (Double) 0D);
+		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
@@ -110,7 +110,7 @@ public class ListaComprasTest {
 
 		final Double resultado = listaCompras.getTotalDiscount();
 
-		Assert.assertEquals(resultado, promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA)));
+		Assert.assertEquals(promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA)), resultado);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class ListaComprasTest {
 
 		final Double resultado = listaCompras.getTotalDiscount();
 
-		Assert.assertEquals(resultado, somaPromocoes);
+		Assert.assertEquals(somaPromocoes, resultado);
 	}
 
 }

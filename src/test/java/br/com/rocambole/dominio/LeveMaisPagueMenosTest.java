@@ -40,21 +40,21 @@ public class LeveMaisPagueMenosTest {
 	public void precoPromocinalDeveriaSerZeroQuandoListaVazia() {
 		final Double resultado = promocao.precoPromocional(Collections.emptyList());
 
-		Assert.assertEquals(resultado, (Double) 0D);
+		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
 	public void precoPromocinalDeveriaSerZeroQuandoNaoAtingeQuantidadeMinima() {
 		final Double resultado = promocao.precoPromocional(Arrays.asList(produto));
 
-		Assert.assertEquals(resultado, (Double) 0D);
+		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
 	public void precoPromocinalDeveriaSerPrecoPromocionalEsperadoQuandoAtingeQuantidadeMinima() {
 		final Double resultado = promocao.precoPromocional(Arrays.asList(produto, produto, produto));
 
-		Assert.assertEquals(resultado, PRECO_PROMOCIONAL_ESPERADO_PROMOCAO);
+		Assert.assertEquals(PRECO_PROMOCIONAL_ESPERADO_PROMOCAO, resultado);
 	}
 
 	@Test
@@ -62,7 +62,7 @@ public class LeveMaisPagueMenosTest {
 		final Double resultado = promocao.precoPromocional(
 				Arrays.asList(produto, produto, produto, produto, produto, produto, produto, produto, produto));
 
-		Assert.assertEquals(resultado, PRECO_PROMOCIONAL_ESPERADO_PROMOCAO);
+		Assert.assertEquals(PRECO_PROMOCIONAL_ESPERADO_PROMOCAO, resultado);
 	}
 
 }
