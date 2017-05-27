@@ -16,12 +16,12 @@ public class ListaComprasTest {
 	 * Lista de compras a serem feitos os testesy
 	 */
 	private ListaCompras listaCompras;
-	
+
 	private Produto produtoA;
 	private Produto produtoB;
 	private Produto produtoC;
 	private Produto produtoD;
-	
+
 	private Promocao promocaoA;
 	private Promocao promocaoB;
 	private Promocao promocaoC;
@@ -32,17 +32,19 @@ public class ListaComprasTest {
 	 */
 	@Before
 	public void iniciaTransientes() {
-		// Mockando os valores, em produção eles viriam provavelmente de um serviço de armazenamento de dados persistente;
+		// Mockando os valores, em produção eles viriam provavelmente de um
+		// serviço de armazenamento de dados persistente;
 		produtoA = new Produto("A", 50D);
 		produtoB = new Produto("B", 30D);
 		produtoC = new Produto("C", 20D);
 		produtoD = new Produto("D", 15D);
-		
+
 		promocaoA = new LeveMaisPagueMenos(produtoA, 3L, 130D);
 		promocaoB = new LeveMaisPagueMenos(produtoB, 2L, 45D);
 		promocaoC = new LeveMaisPagueMenos(produtoC, 2L, produtoC.getPrecoUnitario() * 2);
-		
-		listaCompras = new ListaCompras(Arrays.asList(promocaoA, promocaoB, promocaoC), Arrays.asList(produtoA, produtoB, produtoC, produtoD));
+
+		listaCompras = new ListaCompras(Arrays.asList(promocaoA, promocaoB, promocaoC),
+				Arrays.asList(produtoA, produtoB, produtoC, produtoD));
 	}
 
 	@Test
@@ -63,8 +65,7 @@ public class ListaComprasTest {
 
 	@Test
 	public void totalPriceDeveriaSerASomaDosProdutosNaLista() {
-		final Double somaReal = produtoA.getPrecoUnitario()
-				+ produtoB.getPrecoUnitario();
+		final Double somaReal = produtoA.getPrecoUnitario() + produtoB.getPrecoUnitario();
 
 		listaCompras.add(CODIGO_A);
 		listaCompras.add(CODIGO_B);
@@ -72,6 +73,41 @@ public class ListaComprasTest {
 		final Double resultado = listaCompras.getTotalPrice();
 
 		Assert.assertEquals(resultado, somaReal);
+	}
+
+	@Test
+	public void totalDiscountDeveriaSerZeroQuandoNenhumaPromocaoValida() {
+		final Double resultado = listaCompras.getTotalDiscount();
+
+		Assert.assertEquals(resultado, (Double) 0D);
+	}
+
+	@Test
+	public void totalDiscountDeveriaSerMesmoValorDaPromocaoQuandoUnicaPromocaoValida() {
+		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_A);
+
+		final Double resultado = listaCompras.getTotalDiscount();
+
+		Assert.assertEquals(resultado, promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA)));
+	}
+
+	@Test
+	public void totalDiscountDeveriaSerSomaDosValoresDasPromocoesQuandoVariasPromocoesValidas() {
+		final Double somaPromocoes = promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA))
+				+ promocaoB.precoPromocional(Arrays.asList(produtoB, produtoB, produtoB));
+		
+		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_A);
+
+		listaCompras.add(CODIGO_B);
+		listaCompras.add(CODIGO_B);
+
+		final Double resultado = listaCompras.getTotalDiscount();
+
+		Assert.assertEquals(resultado, somaPromocoes);
 	}
 
 }

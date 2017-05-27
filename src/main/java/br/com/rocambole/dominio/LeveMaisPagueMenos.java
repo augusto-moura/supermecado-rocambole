@@ -18,7 +18,7 @@ public class LeveMaisPagueMenos implements Promocao {
 
 	@Override
 	public Double precoPromocional(List<Produto> alvo) {
-		return null;
+		throw new RuntimeException("Não implementado");
 	}
 
 	public Produto getAlvo() {
