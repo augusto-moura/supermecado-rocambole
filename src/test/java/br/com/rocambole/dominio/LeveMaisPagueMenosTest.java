@@ -25,7 +25,6 @@ public class LeveMaisPagueMenosTest {
 	 */
 	private Produto produto;
 
-
 	/**
 	 * Para garantir que os dados fiquem consistentes entre os testes, eles são
 	 * resetados cada iteração.
@@ -38,31 +37,33 @@ public class LeveMaisPagueMenosTest {
 
 	@Test
 	public void precoPromocinalDeveriaSerZeroQuandoListaVazia() {
-		final Double resultado = promocao.precoPromocional(Collections.emptyList());
+		final Double resultado = promocao.descontoPromocional(Collections.emptyList());
 
 		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
 	public void precoPromocinalDeveriaSerZeroQuandoNaoAtingeQuantidadeMinima() {
-		final Double resultado = promocao.precoPromocional(Arrays.asList(produto));
+		final Double resultado = promocao.descontoPromocional(Arrays.asList(produto));
 
 		Assert.assertEquals((Double) 0D, resultado);
 	}
 
 	@Test
-	public void precoPromocinalDeveriaSerPrecoPromocionalEsperadoQuandoAtingeQuantidadeMinima() {
-		final Double resultado = promocao.precoPromocional(Arrays.asList(produto, produto, produto));
+	public void precoPromocinalDeveriaSerPrecoPrecoUnitarioVezesQuantidadeMenosPromocionalEsperadoQuandoAtingeQuantidadeMinima() {
+		final Double resultado = promocao.descontoPromocional(Arrays.asList(produto, produto, produto));
 
-		Assert.assertEquals(PRECO_PROMOCIONAL_ESPERADO_PROMOCAO, resultado);
+		Assert.assertEquals((QUANTIDADE_MINIMA_PROMOCAO * PRECO_PRODUTO_A) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO,
+				resultado, 0);
 	}
 
 	@Test
-	public void precoPromocinalDeveriaSerPrecoPromocionalEsperadoMesmoQuandoPossivelMaisDeUmaPromocao() {
-		final Double resultado = promocao.precoPromocional(
+	public void precoPromocinalDeveriaSerPrecoUnitarioVezesQuantidadeMenosPrecoPromocionalEsperadoMenosMesmoQuandoPossivelMaisDeUmaPromocao() {
+		final Double resultado = promocao.descontoPromocional(
 				Arrays.asList(produto, produto, produto, produto, produto, produto, produto, produto, produto));
 
-		Assert.assertEquals(PRECO_PROMOCIONAL_ESPERADO_PROMOCAO, resultado);
+		Assert.assertEquals((QUANTIDADE_MINIMA_PROMOCAO * PRECO_PRODUTO_A) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO,
+				resultado, 0);
 	}
 
 }

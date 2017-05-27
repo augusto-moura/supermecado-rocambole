@@ -47,7 +47,7 @@ public class ListaCompras {
 	}
 
 	public Double getTotalDiscount() {
-		final Double soma = listaPromocoes.stream().mapToDouble(p -> p.precoPromocional(listaCompras)).sum();
+		final Double soma = listaPromocoes.stream().mapToDouble(p -> p.descontoPromocional(listaCompras)).sum();
 		return soma;
 	}
 

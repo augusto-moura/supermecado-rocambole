@@ -18,7 +18,7 @@ public class LeveMaisPagueMenos implements Promocao {
 	}
 
 	@Override
-	public Double precoPromocional(List<Produto> alvo) {
+	public Double descontoPromocional(List<Produto> alvo) {
 		final Long quantidadeProdutosNaLista = alvo.stream().filter(produtoAlvo::equals).count();
 		
 		if (quantidadeProdutosNaLista >= quantidadeMinima) {

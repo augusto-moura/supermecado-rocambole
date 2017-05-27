@@ -56,10 +56,10 @@ public class ListaComprasTest {
 
 		promocaoA = new LeveMaisPagueMenos(produtoA, QUANTIDADE_MINIMA_PROMOCAO_A,
 				PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A);
-		
+
 		promocaoB = new LeveMaisPagueMenos(produtoB, QUANTIDADE_MINIMA_PROMOCAO_B,
 				PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_B);
-		
+
 		promocaoC = new LeveMaisPagueMenos(produtoC, QUANTIDADE_MINIMA_PROMOCAO_C,
 				produtoC.getPrecoUnitario() * FATOR_MULTIPLICACAO_PRECO_PROMOCIONAL_PROMOCAO_C);
 
@@ -103,20 +103,28 @@ public class ListaComprasTest {
 	}
 
 	@Test
-	public void totalDiscountDeveriaSerMesmoValorDaPromocaoQuandoUnicaPromocaoValida() {
+	public void totalDiscountDeveriaSerMesmoValorDaPromocaoMenosValorUnitarioVezesQuantidadeQuandoUnicaPromocaoValida() {
+		final Double esperado = (QUANTIDADE_MINIMA_PROMOCAO_A * PRECO_UNITARIO_PRODUTO_A)
+				- PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A;
+
 		listaCompras.add(CODIGO_PRODUTO_A);
 		listaCompras.add(CODIGO_PRODUTO_A);
 		listaCompras.add(CODIGO_PRODUTO_A);
 
 		final Double resultado = listaCompras.getTotalDiscount();
 
-		Assert.assertEquals(promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA)), resultado);
+		Assert.assertEquals(esperado, resultado, 0);
 	}
 
 	@Test
-	public void totalDiscountDeveriaSerSomaDosValoresDasPromocoesQuandoVariasPromocoesValidas() {
-		final Double somaPromocoes = promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA))
-				+ promocaoB.precoPromocional(Arrays.asList(produtoB, produtoB, produtoB));
+	public void totalDiscountDeveriaSerSomaDosValoresDasPromocoesMenosValorUnitarioVezesQuantidadeQuandoVariasPromocoesValidas() {
+		final Double esperadoA = ((QUANTIDADE_MINIMA_PROMOCAO_A * PRECO_UNITARIO_PRODUTO_A)
+				- PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A);
+
+		final Double esperadoB = ((QUANTIDADE_MINIMA_PROMOCAO_B * PRECO_UNITARIO_PRODUTO_B)
+				- PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_B);
+
+		final Double somaPromocoes = esperadoA + esperadoB;
 
 		listaCompras.add(CODIGO_PRODUTO_A);
 		listaCompras.add(CODIGO_PRODUTO_A);
