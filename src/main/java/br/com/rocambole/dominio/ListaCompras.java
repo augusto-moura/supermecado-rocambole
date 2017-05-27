@@ -39,7 +39,7 @@ public class ListaCompras {
 	}
 
 	public void add(final String codigo) {
-		throw new RuntimeException("Não implementado");
+		lista.add(encontrarNoEstoquePorCodigo(codigo));
 	}
 
 	public Double getTotalPrice() {
