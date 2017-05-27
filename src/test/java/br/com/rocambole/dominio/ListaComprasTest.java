@@ -138,4 +138,20 @@ public class ListaComprasTest {
 		Assert.assertEquals(somaPromocoes, resultado);
 	}
 
+	@Test
+	public void totalPriceDeveriaSerASomaDosProdutosNaListaMenosDescontos() {
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+
+		listaCompras.add(CODIGO_PRODUTO_B);
+
+		final Double somaReal = produtoA.getPrecoUnitario() + produtoB.getPrecoUnitario()
+				- ((QUANTIDADE_MINIMA_PROMOCAO_A * PRECO_UNITARIO_PRODUTO_A) - PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A);
+
+		final Double resultado = listaCompras.getTotalPrice();
+
+		Assert.assertEquals(somaReal, resultado);
+	}
+
 }
