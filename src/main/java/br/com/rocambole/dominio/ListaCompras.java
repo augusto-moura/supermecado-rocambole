@@ -5,12 +5,25 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Contém as compras em lista e faz os cálculos de preços, com as informações
+ * injetadas de estoque e promoções ativas.
+ */
 public class ListaCompras {
 
+	/**
+	 * Compras no "carrinho".
+	 */
 	private List<Produto> listaCompras = new ArrayList<>();
 
+	/**
+	 * Promoções ativas que possam valer para as compras no "carrinho"
+	 */
 	private final List<Promocao> listaPromocoes;
 
+	/**
+	 * Estoque de todos os Produtos possiveis que possam ser inseridos na lista.
+	 */
 	private final List<Produto> estoque;
 
 	/**
@@ -29,6 +42,13 @@ public class ListaCompras {
 		this.listaPromocoes = listaPromocoes == null ? Collections.emptyList() : listaPromocoes;
 	}
 
+	/**
+	 * Encontra no estoque um produto com o código passado por argumento.
+	 * 
+	 * @param codigo
+	 *            Codigo do produto a ser procurado.
+	 * @return Produto do estoque.
+	 */
 	private Produto encontrarNoEstoquePorCodigo(final String codigo) {
 		final Produto resultado = estoque.stream().filter(p -> p.getCodigo().equals(codigo)).findFirst().get();
 
@@ -39,15 +59,28 @@ public class ListaCompras {
 		return resultado;
 	}
 
+	/**
+	 * Adiciona um produto presente no estoque que tenha o mesmo codigo.
+	 * 
+	 * @param codigo
+	 *            Codigo do produto a ser procurado no estoque e inserido.
+	 */
 	public void add(final String codigo) {
 		listaCompras.add(encontrarNoEstoquePorCodigo(codigo));
 	}
 
+	/**
+	 * Remove o primeiro caso que encontrar com o codigo passado por argumento.
+	 * 
+	 * @param codigo
+	 *            Codigo do produto a ser procurado na lista de compras e
+	 *            removido.
+	 */
 	public void remove(final String codigo) {
 		final Iterator<Produto> iterador = listaCompras.iterator();
 		Produto ponteiro = iterador.next();
-		
-		while(iterador.hasNext()) {
+
+		while (iterador.hasNext()) {
 			if (ponteiro.getCodigo().equals(codigo)) {
 				iterador.remove();
 				break;
@@ -56,13 +89,24 @@ public class ListaCompras {
 		}
 	}
 
+	/**
+	 * Calcula o preço total a se pagar pelas compras com descontos
+	 * promocionais.
+	 * 
+	 * @return Total a se pagar.
+	 */
 	public Double getTotalPrice() {
 		final Double totalSemDescontos = listaCompras.stream().mapToDouble(Produto::getPrecoUnitario).sum();
 		final Double somaDescontos = getTotalDiscount();
-		
+
 		return totalSemDescontos - somaDescontos;
 	}
 
+	/**
+	 * Retorna o máximo de desconto possível com as compras na lista atual.
+	 * 
+	 * @return Total de descontos.
+	 */
 	public Double getTotalDiscount() {
 		final Double soma = listaPromocoes.stream().mapToDouble(p -> p.descontoPromocional(listaCompras)).sum();
 		return soma;

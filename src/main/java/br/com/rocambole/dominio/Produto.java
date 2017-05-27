@@ -1,9 +1,18 @@
 package br.com.rocambole.dominio;
 
+/**
+ * Registro de um produto. 
+ */
 public class Produto {
 
+	/**
+	 * Código único identificador do Produto
+	 */
 	private final String codigo;
 
+	/**
+	 * Preço da unidade do produto
+	 */
 	private final Double precoUnitario;
 
 	public Produto(String codigo, Double precoUnitario) {

@@ -2,12 +2,26 @@ package br.com.rocambole.dominio;
 
 import java.util.List;
 
+/**
+ * Tipo de Promocao que ao alcançar certa quantia de produtos na lista de
+ * compras, ganha-se um desconto na compra do conjunto.
+ */
 public class LeveMaisPagueMenos implements Promocao {
 
+	/**
+	 * Produto para o qual a promocao é válida
+	 */
 	private final Produto produtoAlvo;
 
+	/**
+	 * Quantidade mínima de produtos para que a promoção passe a valer.
+	 */
 	private final Long quantidadeMinima;
 
+	/**
+	 * Preço após desconto. Nota: Não se trata do desconto, mas sim do valor dos
+	 * produtos em conjunto após o abatimento do desconto.
+	 */
 	private final Double novoPreco;
 
 	public LeveMaisPagueMenos(Produto produtoAlvo, Long quantidadeMinima, Double novoPreco) {
@@ -17,6 +31,10 @@ public class LeveMaisPagueMenos implements Promocao {
 		this.novoPreco = novoPreco;
 	}
 
+	/**
+	 * Calcula com base na quantidade de produtos na promoção, a quantidade
+	 * necessária para alcançar o desconto e o preço atual do produto.
+	 */
 	@Override
 	public Double descontoPromocional(List<Produto> alvo) {
 		final Long quantidadeProdutosNaLista = alvo.stream().filter(produtoAlvo::equals).count();
