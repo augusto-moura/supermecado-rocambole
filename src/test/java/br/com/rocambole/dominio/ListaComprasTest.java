@@ -7,13 +7,30 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ListaComprasTest {
-	private static final String CODIGO_A = "A";
-	private static final String CODIGO_B = "B";
-	private static final String CODIGO_C = "C";
-	private static final String CODIGO_D = "D";
+
+	private static final String CODIGO_PRODUTO_A = "A";
+	private static final Double PRECO_UNITARIO_PRODUTO_A = 50D;
+
+	private static final String CODIGO_PRODUTO_B = "B";
+	private static final Double PRECO_UNITARIO_PRODUTO_B = 30D;
+
+	private static final String CODIGO_PRODUTO_C = "C";
+	private static final Double PRECO_UNITARIO_PRODUTO_C = 20D;
+
+	private static final String CODIGO_PRODUTO_D = "D";
+	private static final Double PRECO_UNITARIO_PRODUTO_D = 15D;
+
+	private static final Long QUANTIDADE_MINIMA_PROMOCAO_A = 3L;
+	private static final Double PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A = 130D;
+
+	private static final Long QUANTIDADE_MINIMA_PROMOCAO_B = 2L;
+	private static final Double PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_B = 45D;
+
+	private static final Long QUANTIDADE_MINIMA_PROMOCAO_C = 3L;
+	private static final Double FATOR_MULTIPLICACAO_PRECO_PROMOCIONAL_PROMOCAO_C = 2D;
 
 	/**
-	 * Lista de compras a serem feitos os testesy
+	 * Lista de compras a serem feitos os testes.
 	 */
 	private ListaCompras listaCompras;
 
@@ -32,16 +49,19 @@ public class ListaComprasTest {
 	 */
 	@Before
 	public void iniciaTransientes() {
-		// Mockando os valores, em produção eles viriam provavelmente de um
-		// serviço de armazenamento de dados persistente;
-		produtoA = new Produto("A", 50D);
-		produtoB = new Produto("B", 30D);
-		produtoC = new Produto("C", 20D);
-		produtoD = new Produto("D", 15D);
+		produtoA = new Produto(CODIGO_PRODUTO_A, PRECO_UNITARIO_PRODUTO_A);
+		produtoB = new Produto(CODIGO_PRODUTO_B, PRECO_UNITARIO_PRODUTO_B);
+		produtoC = new Produto(CODIGO_PRODUTO_C, PRECO_UNITARIO_PRODUTO_C);
+		produtoD = new Produto(CODIGO_PRODUTO_D, PRECO_UNITARIO_PRODUTO_D);
 
-		promocaoA = new LeveMaisPagueMenos(produtoA, 3L, 130D);
-		promocaoB = new LeveMaisPagueMenos(produtoB, 2L, 45D);
-		promocaoC = new LeveMaisPagueMenos(produtoC, 2L, produtoC.getPrecoUnitario() * 2);
+		promocaoA = new LeveMaisPagueMenos(produtoA, QUANTIDADE_MINIMA_PROMOCAO_A,
+				PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_A);
+		
+		promocaoB = new LeveMaisPagueMenos(produtoB, QUANTIDADE_MINIMA_PROMOCAO_B,
+				PRECO_PROMOCIONAL_ESPERADO_PROMOCAO_B);
+		
+		promocaoC = new LeveMaisPagueMenos(produtoC, QUANTIDADE_MINIMA_PROMOCAO_C,
+				produtoC.getPrecoUnitario() * FATOR_MULTIPLICACAO_PRECO_PROMOCIONAL_PROMOCAO_C);
 
 		listaCompras = new ListaCompras(Arrays.asList(promocaoA, promocaoB, promocaoC),
 				Arrays.asList(produtoA, produtoB, produtoC, produtoD));
@@ -56,7 +76,7 @@ public class ListaComprasTest {
 
 	@Test
 	public void totalPriceDeveriaTerOPrecoDoUnicoProdutoNaLista() {
-		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
 
 		final Double resultado = listaCompras.getTotalPrice();
 
@@ -67,8 +87,8 @@ public class ListaComprasTest {
 	public void totalPriceDeveriaSerASomaDosProdutosNaLista() {
 		final Double somaReal = produtoA.getPrecoUnitario() + produtoB.getPrecoUnitario();
 
-		listaCompras.add(CODIGO_A);
-		listaCompras.add(CODIGO_B);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_B);
 
 		final Double resultado = listaCompras.getTotalPrice();
 
@@ -84,9 +104,9 @@ public class ListaComprasTest {
 
 	@Test
 	public void totalDiscountDeveriaSerMesmoValorDaPromocaoQuandoUnicaPromocaoValida() {
-		listaCompras.add(CODIGO_A);
-		listaCompras.add(CODIGO_A);
-		listaCompras.add(CODIGO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
 
 		final Double resultado = listaCompras.getTotalDiscount();
 
@@ -97,13 +117,13 @@ public class ListaComprasTest {
 	public void totalDiscountDeveriaSerSomaDosValoresDasPromocoesQuandoVariasPromocoesValidas() {
 		final Double somaPromocoes = promocaoA.precoPromocional(Arrays.asList(produtoA, produtoA, produtoA))
 				+ promocaoB.precoPromocional(Arrays.asList(produtoB, produtoB, produtoB));
-		
-		listaCompras.add(CODIGO_A);
-		listaCompras.add(CODIGO_A);
-		listaCompras.add(CODIGO_A);
 
-		listaCompras.add(CODIGO_B);
-		listaCompras.add(CODIGO_B);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+		listaCompras.add(CODIGO_PRODUTO_A);
+
+		listaCompras.add(CODIGO_PRODUTO_B);
+		listaCompras.add(CODIGO_PRODUTO_B);
 
 		final Double resultado = listaCompras.getTotalDiscount();
 
