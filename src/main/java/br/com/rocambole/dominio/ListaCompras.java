@@ -2,6 +2,7 @@ package br.com.rocambole.dominio;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class ListaCompras {
@@ -42,8 +43,24 @@ public class ListaCompras {
 		listaCompras.add(encontrarNoEstoquePorCodigo(codigo));
 	}
 
+	public void remove(final String codigo) {
+		final Iterator<Produto> iterador = listaCompras.iterator();
+		Produto ponteiro = iterador.next();
+		
+		while(iterador.hasNext()) {
+			if (ponteiro.getCodigo().equals(codigo)) {
+				iterador.remove();
+				break;
+			}
+			ponteiro = iterador.next();
+		}
+	}
+
 	public Double getTotalPrice() {
-		throw new RuntimeException("Não implementado");
+		final Double totalSemDescontos = listaCompras.stream().mapToDouble(Produto::getPrecoUnitario).sum();
+		final Double somaDescontos = getTotalDiscount();
+		
+		return totalSemDescontos - somaDescontos;
 	}
 
 	public Double getTotalDiscount() {
