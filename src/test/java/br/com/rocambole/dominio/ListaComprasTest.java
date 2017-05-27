@@ -154,4 +154,102 @@ public class ListaComprasTest {
 		Assert.assertEquals(somaReal, resultado);
 	}
 
+	@Test
+	public void testePropostoPeloDocumento() {
+		ListaCompras checkout = listaCompras;
+
+		checkout.add("A");
+		Assert.assertEquals(50D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(100D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(130D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(180D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(230D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(260D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(40D, checkout.getTotalDiscount(), 0);
+		checkout.remove("A");
+		Assert.assertEquals(230D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+
+		 // Teste 2 (caixa zerado)
+		iniciaTransientes();
+		checkout = listaCompras;
+		
+		checkout.add("D");
+		Assert.assertEquals(15D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(65D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("B");
+		Assert.assertEquals(95D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(145D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("B");
+		Assert.assertEquals(160D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(15D, checkout.getTotalDiscount(), 0);
+		checkout.add("A");
+		Assert.assertEquals(190D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(35D, checkout.getTotalDiscount(), 0);
+		checkout.remove("A");
+		Assert.assertEquals(160D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(15D, checkout.getTotalDiscount(), 0);
+		checkout.remove("B");
+		Assert.assertEquals(145D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		
+		
+		// Teste 3 (caixa zerado)
+		iniciaTransientes();
+		checkout = listaCompras;
+		
+		checkout.add("C");
+		Assert.assertEquals(20D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("C");
+		Assert.assertEquals(40D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("C");
+		Assert.assertEquals(40D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.add("C");
+		Assert.assertEquals(60D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.remove("C");
+		Assert.assertEquals(40D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(20D, checkout.getTotalDiscount(), 0);
+		checkout.remove("C");
+		Assert.assertEquals(40D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		
+		
+		// Teste 4 (caixa zerado)
+		iniciaTransientes();
+		checkout = listaCompras;
+		
+		checkout.add("C");
+		Assert.assertEquals(20D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("B");
+		Assert.assertEquals(50D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+		checkout.add("B");
+		Assert.assertEquals(65D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(15D, checkout.getTotalDiscount(), 0);
+		checkout.remove("B");
+		Assert.assertEquals(50D, checkout.getTotalPrice(), 0);
+		Assert.assertEquals(0D, checkout.getTotalDiscount(), 0);
+	}
+
 }
